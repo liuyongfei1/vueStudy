@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Vue的自定义事件</title>
+  </head>
+  <body>
+    <div id="app">
+        <my_btn @total="allcount"></my_btn>
+        <my_btn @total="allcount"></my_btn>
+        <my_btn @total="allcount"></my_btn>
+        <p>所有按钮一共点击了{{totalCounter}}次</p>
+    </div>
+
+    <template id="my_btn">
+      <button @click="total()">点击了{{counter}}次</button>
+    </template>
+
+    <!-- built files will be auto injected -->
+  </body>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue">
+  </script>
+  <script type="text/javascript">
+//    // 子组件的实例
+//    let child1 = Vue.extend({
+//      template : "#my_img",
+//      props: ['imgsrc']
+//    });
+//
+//    let child2 = Vue.extend({
+//      template : "#my_title",
+//      props: ['title']
+//    });
+
+
+    // 注册父组件
+    Vue.component('my_btn',{
+      template: '#my_btn',
+      data : function () {
+        return {
+          counter : 0
+        }
+      },
+      methods: {
+        total : function () {
+          this.counter += 1;
+
+          // 通知外界，我调用了这个方法
+          this.$emit('total')
+        }
+      }
+    })
+
+    new Vue({
+      el : '#app',
+      data : function () {
+        return {
+          totalCounter : 0
+        }
+      },
+      methods: {
+        allcount : function () {
+          this.totalCounter += 1;
+        }
+      }
+    })
+
+
+  </script>
+</html>

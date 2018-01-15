@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>vue中多层组件通信</title>
+  </head>
+  <body>
+    <div id="app">
+      <my_parent :imgtitle="title" :imgsrc="img"></my_parent>
+    </div>
+    
+    <template id="my_img">
+      <img :src="imgsrc" width="200">
+    </template>
+    <template id="my_title">
+      <h2>{{title}}</h2>
+    </template>
+
+    <template id="my_parent">
+      <div>
+        <child1 :imgsrc="imgsrc"></child1>
+        <child2 :title="imgtitle"></child2>
+      </div>
+    </template>
+    <!-- built files will be auto injected -->
+  </body>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue">
+  </script>
+  <script type="text/javascript">
+    // 子组件的实例
+    let child1 = Vue.extend({
+      template : "#my_img",
+      props: ['imgsrc']
+    });
+
+    let child2 = Vue.extend({
+      template : "#my_title",
+      props: ['title']
+    });
+
+    // 注册父组件
+    
+    Vue.component('my_parent',{
+      props:['imgtitle','imgsrc'],
+      components: {
+        'child1' : child1,
+        'child2' : child2
+      },
+      template: '#my_parent'
+    })
+    new Vue({
+      el : '#app',
+      data : {
+        title : '今天是星期天',
+        img : '../xinjiapo.jpg'
+      },
+    })
+  </script>
+</html>
