@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue系列之-组件demo1</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+         <!-- #app是Vue实例挂载的元素，应该在挂载元素范围内使用组件-->
+         <my-component></my-component>
+     </div>
+
+    <script>
+    // 创建一个组件构建器
+     var myComponent = Vue.extend({
+        template: '<div>This is component demo!</div>'
+     })
+
+     // 注册组件，并指定组件的名字
+         Vue.component('my-component', myComponent)
+         // 声明Vue实例
+         new Vue({
+            el: "#app" // 挂载元素
+         })
+
+     // 声明VM实例
+    var vm = new Vue({
+        el: "#demo",  // 挂载元素
+        data: {
+           parentArray: 0
+        }
+    })
+</script>
+</body>
+
+</html>
